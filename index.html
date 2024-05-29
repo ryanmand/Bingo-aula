@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartela de Bingo</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            margin: 20px auto;
+            font-size: 24px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+            width: 50px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <table id="bingo-card">
+        <tr>
+            <th>B</th>
+            <th>I</th>
+            <th>N</th>
+            <th>G</th>
+            <th>O</th>
+        </tr>
+    </table>
+
+    <script>
+        function generateBingoCard() {
+            function getRandomNumber(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            function generateColumn(min, max) {
+                let column = [];
+                while (column.length < 5) {
+                    let num = getRandomNumber(min, max);
+                    if (!column.includes(num)) {
+                        column.push(num);
+                    }
+                }
+                return column;
+            }
+
+            let B = generateColumn(1, 15);
+            let I = generateColumn(16, 30);
+            let N = generateColumn(31, 45);
+            let G = generateColumn(46, 60);
+            let O = generateColumn(61, 75);
+
+            N[2] = 'Free';
+
+            return [B, I, N, G, O];
+        }
+
+        function displayBingoCard(card) {
+            const table = document.getElementById('bingo-card');
+            for (let i = 0; i < 5; i++) {
+                let row = document.createElement('tr');
+                for (let j = 0; j < 5; j++) {
+                    let cell = document.createElement('td');
+                    cell.textContent = card[j][i];
+                    row.appendChild(cell);
+                }
+                table.appendChild(row);
+            }
+        }
+
+        const bingoCard = generateBingoCard();
+        displayBingoCard(bingoCard);
+    </script>
+</body>
+</html>
